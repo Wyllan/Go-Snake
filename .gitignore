@@ -10,3 +10,6 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+
+# Battlesnake Engine
+engine_0.2.25_Windows_x86_64
