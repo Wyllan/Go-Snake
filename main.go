@@ -43,7 +43,7 @@ type game struct {
 type board struct {
 	Height int     `json:"height"`
 	Width  int     `json:"width"`
-	Food   food    `json:"food"`
+	Food   []point `json:"food"`
 	Snakes []snake `json:"snakes"`
 }
 
@@ -58,13 +58,14 @@ type body struct {
 	Body []point `json:"body"`
 }
 
-type food struct {
-	Food []point
-}
-
 type point struct {
 	X int `json:"x"`
 	Y int `json:"y"`
+}
+
+type boardData struct {
+	You   snake
+	Board board
 }
 
 func handler(rw http.ResponseWriter, r *http.Request) {
@@ -80,11 +81,12 @@ func handler(rw http.ResponseWriter, r *http.Request) {
 		rw.Write(b)
 		// json.NewEncoder(rw).Encode(response)
 	case "/move":
+		// fmt.Println("start move")
 		request := MoveReq{}
 		json.NewDecoder(r.Body).Decode(&request)
 
 		// Choose a random direction to move in
-
+		fmt.Println(request.You.ID, request.Board.Snakes)
 		response := MoveResp{
 			Move: move(request),
 		}
